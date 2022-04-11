@@ -10,6 +10,8 @@ using namespace std;
 
 int main() {
 
+    BinTree tree;
+
     char choice;
     string input;
 
@@ -32,9 +34,7 @@ int main() {
         switch (choice) {
 
             case 'a':
-
-
-
+                tree.createTree();
                 i--;
                 break;
 
@@ -50,20 +50,17 @@ int main() {
                 i--;
                 break;
             case 'd':
-
-
+                tree.positionRoot();
                 i--;
                 break;
 
             case 'e':
-
-
+                tree.positionLeft();
                 i--;
                 break;
 
             case 'f':
-
-
+                tree.positionRight();
                 i--;
                 break;
             case 'g':
@@ -73,13 +70,11 @@ int main() {
                 break;
 
             case 'h':
-
-
+                tree.positionActual();
                 i--;
                 break;
 
             case 'i':
-
 
                 i--;
                 break;
