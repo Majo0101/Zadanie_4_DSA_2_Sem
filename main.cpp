@@ -1,10 +1,8 @@
 #include <bits/stdc++.h>
 #include "BinTree.h"
 
-#define ZERO 0
-#define RESTRT_CNTR 0;
-#define CLR_STR "\0"
-
+#define RUN true
+#define STOP false
 
 using namespace std;
 
@@ -14,18 +12,19 @@ int main() {
 
     char choice;
     string input;
+    bool loop = RUN;
 
-    for (int i = 0; i < 3; i++) {
+    while (loop) {
 
         cout << endl << endl
-        << "a - Create binary tree" << endl
-        << "b - Create left child" << endl
-        << "c - Create right child" << endl
-        << "d - Set to root" << endl
-        << "e - Set to left child" << endl
-        << "f - Set to right child" << endl
+        << "a - Create binary tree" << endl // dorobit
+        << "b - Create left child" << endl //ok
+        << "c - Create right child" << endl //ok
+        << "d - Set to root" << endl //ok
+        << "e - Set to left child" << endl //ok
+        << "f - Set to right child" << endl //ok
         << "g - Set active item to parent" << endl
-        << "h - Show active item and left and right data" << endl
+        << "h - Show active item and left and right data" << endl //ok
         << "i - Start game" << endl
         << "x - exit" << endl << endl;
 
@@ -35,59 +34,45 @@ int main() {
 
             case 'a':
                 tree.createTree();
-                i--;
                 break;
 
             case 'b':
-
-
-                i--;
+                tree.createLeftChild();
                 break;
 
             case 'c':
-
-
-                i--;
+                tree.createRightChild();
                 break;
             case 'd':
                 tree.positionRoot();
-                i--;
                 break;
 
             case 'e':
                 tree.positionLeft();
-                i--;
                 break;
 
             case 'f':
                 tree.positionRight();
-                i--;
                 break;
             case 'g':
-
-
-                i--;
+                tree.positionBack();
                 break;
 
             case 'h':
                 tree.positionActual();
-                i--;
+
                 break;
 
             case 'i':
 
-                i--;
+
                 break;
 
             case 'x':
-
-
-
-                i = 5;
+                loop = STOP;
                 break;
 
             default:
-                i--;
                 cout << endl << "Bad input" << endl;
         }
     }

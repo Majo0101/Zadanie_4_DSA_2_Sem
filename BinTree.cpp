@@ -1,20 +1,32 @@
 #include <bits/stdc++.h>
-
 #include <utility>
 #include "BinTree.h"
 
-#define ZERO 0
-#define RESTRT_CNTR 0;
 #define CLEAR_STRING "EMPTY"
-#define CLEAR_CHOICE 'n'
-
 #define file "tree.txt"
+#define AND &&
 
 using namespace std;
 
+BinTree::BinTree() {
+    root = NULL;
+    position = NULL;
+}
+
+void BinTree::createRoot() {
+
+    Node *tmp = new Node;
+    tmp->data = CLEAR_STRING;
+    tmp->left = tmp->right = NULL;
+    root = tmp;
+
+    position = root;
+
+    cout << "Tree was created..."<< endl;
+}
+
 void BinTree::createTree() {
 
-    char choice = ZERO;
     ifstream tree(file);
 
     cout << endl
@@ -37,8 +49,7 @@ void BinTree::createTree() {
     if (choice == 'b'){
         if (root == NULL){
 
-            setRoot(CLEAR_STRING);
-            cout << "Tree was created..."<< endl;
+            createRoot();
 
         }else{
 
@@ -48,55 +59,125 @@ void BinTree::createTree() {
 
             if (choice == 'y'){
 
+                delTree(root);
+                root = position = NULL;
+                createRoot();
+                choice = 'b';
 
-
-                //vymazat stary strom
-
-            }else{
-                fflush(stdin);
             }
         }
     }
 
-    if(choice != 'a' && choice != 'b'){
+    data.clear();
+
+    if(choice != 'a' AND choice != 'b'){
         cout << "Bad input !!" << endl;
     }
-}
+} // citanie zo suboru
 
-void BinTree::positionRoot() {
-
-    string data;
-    char choice;
+void BinTree::createLeftChild() {
 
     if (root != NULL){
-        position = root;
-        cout << "DATA: "<< position->data << endl;
-        cout << "Do you want to change the data (y/n) ?" << endl;
-        cin >> choice;
 
-        if (choice != 'y' && choice != 'n'){
-            cout << "Bad input !!" << endl;
-        }
+        if (position != NULL){
 
-        if (choice == 'y'){
-            cout << "Enter data:" << endl;
-            cin >> data;
-            position->data = move(data);
+            if (position->left == NULL){
+
+                Node*leaf = new Node;
+                leaf->data = CLEAR_STRING;
+                leaf->left = leaf->right = NULL;
+                position->left = leaf;
+
+                cout << "Left leaf was created" << endl;
+
+                cout << "Do you want to change the data (y/n) ?" << endl;
+                cin >> choice;
+
+                if (choice != 'y' && choice != 'n'){
+                    cout << "Bad input !!" << endl;
+                }
+
+                if (choice == 'y'){
+                    cout << "Enter data:" << endl;
+                    cin.sync();
+                    getline(cin,data);
+                    position->left->data = move(data);
+                }
+
+            }else{
+                cout << "Left leaf is exist !!" << endl;
+            }
+
+        }else{
+            cout << "No position" << endl;
         }
 
     }else{
         cout << "Tree doesn't exist !!" << endl;
     }
 
-    data = CLEAR_STRING;
-    choice = CLEAR_CHOICE;
+    data.clear();
+}
 
+void BinTree::createRightChild() {
+
+    if (root != NULL){
+
+        if (position != NULL){
+
+            if (position->right == NULL){
+
+                Node*leaf = new Node;
+                leaf->data = CLEAR_STRING;
+                leaf->left = leaf->right = NULL;
+                position->right = leaf;
+
+                cout << "Right leaf was created" << endl;
+
+                cout << "Do you want to change the data (y/n) ?" << endl;
+                cin >> choice;
+
+                if (choice != 'y' && choice != 'n'){
+                    cout << "Bad input !!" << endl;
+                }
+
+                if (choice == 'y'){
+                    cout << "Enter data:" << endl;
+                    cin.sync();
+                    getline(cin,data);
+                    position->right->data = move(data);
+                }
+
+            }else{
+                cout << "Left leaf is exist !!" << endl;
+            }
+
+        }else{
+            cout << "No position" << endl;
+        }
+
+    }else{
+        cout << "Tree doesn't exist !!" << endl;
+    }
+
+    data.clear();
+
+}
+
+void BinTree::positionRoot() {
+
+    if (root != NULL){
+
+        position = root;
+        cout << "DATA: "<< position->data << endl;
+
+    }else{
+        cout << "Tree doesn't exist !!" << endl;
+    }
 }
 
 void BinTree::positionLeft() {
 
-    char choice;
-    string data;
     Node*tmp;
 
     if (root != NULL){
@@ -105,18 +186,6 @@ void BinTree::positionLeft() {
             tmp = position->left;
             position = tmp;
             cout << "DATA: " << position->data << endl;
-            cout << "Do you want to change the data (y/n) ?" << endl;
-            cin >> choice;
-
-            if (choice != 'y' && choice != 'n'){
-                cout << "Bad input !!" << endl;
-            }
-
-            if (choice == 'y'){
-                cout << "Enter data:" << endl;
-                cin >> data;
-                position->data = move(data);
-            }
 
         }else{
             cout << "Left leaf doesn't exist" << endl;
@@ -125,15 +194,10 @@ void BinTree::positionLeft() {
     }else{
         cout << "Tree doesn't exist !!" << endl;
     }
-
-    data = CLEAR_STRING;
-    choice = CLEAR_CHOICE;
 }
 
 void BinTree::positionRight() {
 
-    char choice;
-    string data;
     Node*tmp;
 
     if (root != NULL){
@@ -142,18 +206,6 @@ void BinTree::positionRight() {
             tmp = position->right;
             position = tmp;
             cout << "DATA: " << position->data << endl;
-            cout << "Do you want to change the data (y/n) ?" << endl;
-            cin >> choice;
-
-            if (choice != 'y' && choice != 'n'){
-                cout << "Bad input !!" << endl;
-            }
-
-            if (choice == 'y'){
-                cout << "Enter data:" << endl;
-                cin >> data;
-                position->data = move(data);
-            }
 
         }else{
             cout << "Right leaf doesn't exist" << endl;
@@ -163,32 +215,14 @@ void BinTree::positionRight() {
         cout << "Tree doesn't exist !!" << endl;
     }
 
-    data = CLEAR_STRING;
-    choice = CLEAR_CHOICE;
 }
 
 void BinTree::positionActual() {
 
-    char choice;
-    string data;
-
     if (root != NULL){
 
         if (position != NULL){
-            cout << "DATA parent: " << position->data << endl;
-
-            cout << "Do you want to change the parent data (y/n) ?" << endl;
-            cin >> choice;
-
-            if (choice != 'y' && choice != 'n'){
-                cout << "Bad input !!" << endl;
-            }
-
-            if (choice == 'y'){
-                cout << "Enter data:" << endl;
-                cin >> data;
-                position->data = move(data);
-            }
+            cout << "DATA actual: " << position->data << endl;
 
             if (position->left != NULL){
                 cout << "DATA left leaf: " << position->left->data << endl;
@@ -202,6 +236,20 @@ void BinTree::positionActual() {
                 cout << "Right leaf doesn't exist" << endl;
             }
 
+            cout << "Do you want to change the actual data (y/n) ?" << endl;
+            cin >> choice;
+
+            if (choice != 'y' && choice != 'n'){
+                cout << "Bad input !!" << endl;
+            }
+
+            if (choice == 'y'){
+                cout << "Enter data:" << endl;
+                cin.sync();
+                getline(cin,data);
+                position->data = move(data);
+            }
+
         }else{
             cout << "No position" << endl;
         }
@@ -210,49 +258,44 @@ void BinTree::positionActual() {
         cout << "Tree doesn't exist !!" << endl;
     }
 
-    data = CLEAR_STRING;
-    choice = CLEAR_CHOICE;
+    data.clear();
 }
 
-void BinTree::postionBack() {
+void BinTree::positionBack() {
+    prevPosition(root);
+}
+
+void BinTree::game() {
 
 }
 
-
-
-
-
-void BinTree::setRoot(string in) {
-
-    if (root != NULL){
-
-        root->data = move(in);
-
-    }else{
-
-        Node *tmp = new Node;
-        tmp->data = CLEAR_STRING;
-        tmp->left = tmp->right = NULL;
-        root = tmp;
-
+void BinTree::delTree(Node *leaf) {
+    if (leaf != NULL){
+        delTree(leaf->left);
+        delTree(leaf->right);
+        delete leaf;
     }
 }
 
+void BinTree::prevPosition(Node*leaf) {
+
+    Node*tmp;
+
+    if (leaf != NULL){
+        if (leaf->left != NULL AND leaf->right != NULL){
 
 
 
 
 
 
+        }else{
+            cout << "Tree doesn't have leafs" << endl;
+        }
 
-
-
-
-
-
-BinTree::BinTree() {
-    root = NULL;
-    position = NULL;
+    }else{
+        cout << "Tree doesn't exist !!" << endl;
+    }
 }
 
 BinTree::~BinTree() {
@@ -269,23 +312,3 @@ BinTree::~BinTree() {
     }
 
 }
-
-void BinTree::printRoot() {
-
-    if(root != NULL){
-        cout << root->data << endl;
-    }else{
-        cout << "Tree doesn't exist !!" << endl;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-

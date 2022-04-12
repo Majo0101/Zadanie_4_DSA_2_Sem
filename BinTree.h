@@ -9,24 +9,33 @@ public:
     BinTree();
     ~BinTree();
 
+    void createRoot();
     void createTree();
+    void createLeftChild();
+    void createRightChild();
+
     void positionRoot();
     void positionLeft();
     void positionRight();
     void positionActual();
-    void postionBack();
+    void positionBack();
 
-    void setRoot(string in);
+    void game();
 
-    void printRoot();
 
 private:
+
+    string data;
+    char choice{};
 
     struct Node{
         string data;
         Node * left;
         Node *right;
     };
+
+    void delTree(Node*leaf);
+    void prevPosition(Node*leaf);
 
     Node*root;
     Node*position;
