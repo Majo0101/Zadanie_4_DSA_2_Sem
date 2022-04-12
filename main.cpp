@@ -17,16 +17,16 @@ int main() {
     while (loop) {
 
         cout << endl << endl
-        << "a - Create binary tree" << endl // dorobit
-        << "b - Create left child" << endl //ok
-        << "c - Create right child" << endl //ok
-        << "d - Set to root" << endl //ok
-        << "e - Set to left child" << endl //ok
-        << "f - Set to right child" << endl //ok
-        << "g - Set active item to parent" << endl
-        << "h - Show active item and left and right data" << endl //ok
-        << "i - Start game" << endl
-        << "x - exit" << endl << endl;
+        << "a - Create binary tree" << endl                         // dorobit citanie
+        << "b - Create left child" << endl                          //ok
+        << "c - Create right child" << endl                         //ok
+        << "d - Set to root" << endl                                //ok
+        << "e - Set to left child" << endl                          //ok
+        << "f - Set to right child" << endl                         //ok
+        << "g - Set active item to parent" << endl                  //ok
+        << "h - Show active item and left and right data" << endl   //ok
+        << "i - Start game" << endl                                 // dorobit hru
+        << "x - exit" << endl << endl;                              //ok
 
         cin >> choice;
 

@@ -23,6 +23,8 @@ public:
     void positionActual();
     void positionBack();
 
+    void printData(ostream &tree);
+
     void game();
 
 
@@ -40,7 +42,8 @@ private:
 
     void delTree(Node*leaf);
     void prevPosition(Node*leaf);
-    void print(Node*leaf);
+    void print(Node*leaf, ostream &tree);
+    void read();
 
     Node*root;
     Node*position;

@@ -47,6 +47,7 @@ void BinTree::createRight(string input) {
 }
 
 
+
 void BinTree::createTree() {
 
     ifstream tree(file);
@@ -58,14 +59,24 @@ void BinTree::createTree() {
     cin >> choice;
 
     if(choice == 'a'){
-        if (tree.is_open()){
+        if (root != NULL){
+            cout << "DATA will be overwritten !!" << endl;
+            cout << "Do you want to continue ?  (y/n)" << endl;
 
-            // nacitat strom zo suboru
+            cin >> choice;
 
+            if (choice == 'y'){
 
-        }else{
-            cout << "Somethings went wrong with file" << endl;
+                // vymazat existujuce
+                // citat subor
+
+                choice = 'a';
+            }
+
         }
+
+        // nacitat strom zo suboru hned
+
     }
 
     if (choice == 'b'){
@@ -95,7 +106,7 @@ void BinTree::createTree() {
     if(choice != 'a' AND choice != 'b'){
         cout << "Bad input !!" << endl;
     }
-} // citanie zo suboru
+}
 
 void BinTree::createLeftChild() {
 
@@ -108,6 +119,7 @@ void BinTree::createLeftChild() {
                 createLeft(CLEAR_STRING);
 
                 cout << "Left leaf was created" << endl;
+                cout << "DATA: " << position->left->data << endl;
 
                 cout << "Do you want to change the data (y/n) ?" << endl;
                 cin >> choice;
@@ -149,6 +161,7 @@ void BinTree::createRightChild() {
                 createRight(CLEAR_STRING);
 
                 cout << "Right leaf was created" << endl;
+                cout << "DATA: " << position->right->data << endl;
 
                 cout << "Do you want to change the data (y/n) ?" << endl;
                 cin >> choice;
@@ -282,7 +295,26 @@ void BinTree::positionBack() {
 }
 
 void BinTree::game() {
-    print(root);
+    cout << "Game doesn't exist" << endl;
+}
+
+void BinTree::printData(ostream &tree) {
+    print(root, tree);
+}
+
+void BinTree::read() {
+
+}
+
+void BinTree::print(Node*leaf, ostream &tree) {
+
+    if(!leaf){
+        tree << "~" << endl;
+    }else{
+        tree << leaf->data << endl;
+        print(leaf->left, tree);
+        print(leaf->right, tree);
+    }
 }
 
 void BinTree::delTree(Node *leaf) {
@@ -301,6 +333,7 @@ void BinTree::prevPosition(Node*leaf) {
         if (leaf->prev != NULL ){
 
             position = leaf->prev;
+            cout << "Data: " << position->data << endl;
 
         }else{
             cout << "Tree doesn't have leafs" << endl;
@@ -311,6 +344,7 @@ void BinTree::prevPosition(Node*leaf) {
     }
 }
 
+
 BinTree::~BinTree() {
 
     ofstream tree(file);
@@ -318,23 +352,10 @@ BinTree::~BinTree() {
     if (!tree.is_open()){
         cout << "Somethings went wrong" << endl;
     }else{
-
-        // zapisat do suboru
-
-
+        printData(tree);
+        cout << "Data was successfully writen" << endl;
     }
 
-}
-
-void BinTree::print(Node*leaf) {
-
-    if(leaf != NULL){
-
-
-        print(leaf->left);
-        print(leaf->right);
-
-        cout << leaf->data << " , ";
-    }
+    tree.close();
 
 }
