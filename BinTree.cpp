@@ -13,17 +13,39 @@ BinTree::BinTree() {
     position = NULL;
 }
 
-void BinTree::createRoot() {
+
+void BinTree::createRoot(string input) {
 
     Node *tmp = new Node;
-    tmp->data = CLEAR_STRING;
-    tmp->left = tmp->right = NULL;
+    tmp->data = move(input);
+    tmp->left = tmp->right = tmp->prev = NULL;
     root = tmp;
 
     position = root;
 
     cout << "Tree was created..."<< endl;
 }
+
+void BinTree::createLeft(string input) {
+
+    Node*leaf = new Node;
+    leaf->data = move(input);
+    leaf->left = leaf->right = NULL;
+    leaf->prev = position;
+    position->left = leaf;
+
+}
+
+void BinTree::createRight(string input) {
+
+    Node*leaf = new Node;
+    leaf->data = move(input);
+    leaf->left = leaf->right = NULL;
+    leaf->prev = position;
+    position->right = leaf;
+
+}
+
 
 void BinTree::createTree() {
 
@@ -49,7 +71,7 @@ void BinTree::createTree() {
     if (choice == 'b'){
         if (root == NULL){
 
-            createRoot();
+            createRoot(CLEAR_STRING);
 
         }else{
 
@@ -61,7 +83,7 @@ void BinTree::createTree() {
 
                 delTree(root);
                 root = position = NULL;
-                createRoot();
+                createRoot(CLEAR_STRING);
                 choice = 'b';
 
             }
@@ -83,10 +105,7 @@ void BinTree::createLeftChild() {
 
             if (position->left == NULL){
 
-                Node*leaf = new Node;
-                leaf->data = CLEAR_STRING;
-                leaf->left = leaf->right = NULL;
-                position->left = leaf;
+                createLeft(CLEAR_STRING);
 
                 cout << "Left leaf was created" << endl;
 
@@ -127,10 +146,7 @@ void BinTree::createRightChild() {
 
             if (position->right == NULL){
 
-                Node*leaf = new Node;
-                leaf->data = CLEAR_STRING;
-                leaf->left = leaf->right = NULL;
-                position->right = leaf;
+                createRight(CLEAR_STRING);
 
                 cout << "Right leaf was created" << endl;
 
@@ -231,7 +247,7 @@ void BinTree::positionActual() {
             }
 
             if (position->right != NULL){
-                cout << "DATA left leaf: " << position->right->data << endl;
+                cout << "DATA right leaf: " << position->right->data << endl;
             }else{
                 cout << "Right leaf doesn't exist" << endl;
             }
@@ -262,11 +278,11 @@ void BinTree::positionActual() {
 }
 
 void BinTree::positionBack() {
-    prevPosition(root);
+    prevPosition(position);
 }
 
 void BinTree::game() {
-
+    print(root);
 }
 
 void BinTree::delTree(Node *leaf) {
@@ -282,12 +298,9 @@ void BinTree::prevPosition(Node*leaf) {
     Node*tmp;
 
     if (leaf != NULL){
-        if (leaf->left != NULL AND leaf->right != NULL){
+        if (leaf->prev != NULL ){
 
-
-
-
-
+            position = leaf->prev;
 
         }else{
             cout << "Tree doesn't have leafs" << endl;
@@ -309,6 +322,19 @@ BinTree::~BinTree() {
         // zapisat do suboru
 
 
+    }
+
+}
+
+void BinTree::print(Node*leaf) {
+
+    if(leaf != NULL){
+
+
+        print(leaf->left);
+        print(leaf->right);
+
+        cout << leaf->data << " , ";
     }
 
 }

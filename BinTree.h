@@ -9,7 +9,10 @@ public:
     BinTree();
     ~BinTree();
 
-    void createRoot();
+    void createRoot(string input);
+    void createLeft(string input);
+    void createRight(string input);
+
     void createTree();
     void createLeftChild();
     void createRightChild();
@@ -32,14 +35,15 @@ private:
         string data;
         Node * left;
         Node *right;
+        Node *prev;
     };
 
     void delTree(Node*leaf);
     void prevPosition(Node*leaf);
+    void print(Node*leaf);
 
     Node*root;
     Node*position;
 };
-
 
 #endif //ZADANIE_4_DSA_2_SEM_BINTREE_H

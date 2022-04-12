@@ -43,6 +43,7 @@ int main() {
             case 'c':
                 tree.createRightChild();
                 break;
+
             case 'd':
                 tree.positionRoot();
                 break;
@@ -54,18 +55,17 @@ int main() {
             case 'f':
                 tree.positionRight();
                 break;
+
             case 'g':
                 tree.positionBack();
                 break;
 
             case 'h':
                 tree.positionActual();
-
                 break;
 
             case 'i':
-
-
+                tree.game();
                 break;
 
             case 'x':
