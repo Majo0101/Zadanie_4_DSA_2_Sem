@@ -5,6 +5,9 @@
 #define CLEAR_STRING "EMPTY"
 #define file "tree.txt"
 #define AND &&
+#define ZERO 0
+#define LEFT true;
+#define RIGHT false;
 
 using namespace std;
 
@@ -17,8 +20,11 @@ BinTree::BinTree() {
 void BinTree::createRoot(string input) {
 
     Node *tmp = new Node;
+    tmp->pos = 'L';
     tmp->data = move(input);
+
     tmp->left = tmp->right = tmp->prev = NULL;
+
     root = tmp;
 
     position = root;
@@ -29,20 +35,44 @@ void BinTree::createRoot(string input) {
 void BinTree::createLeft(string input) {
 
     Node*leaf = new Node;
+    leaf->pos = 'L';
     leaf->data = move(input);
+
     leaf->left = leaf->right = NULL;
+
     leaf->prev = position;
     position->left = leaf;
+
+}
+
+void BinTree::moveLeft() {
+
+    Node*tmp;
+
+    tmp = position->left;
+    position = tmp;
 
 }
 
 void BinTree::createRight(string input) {
 
     Node*leaf = new Node;
+    leaf->pos = 'P';
     leaf->data = move(input);
+
     leaf->left = leaf->right = NULL;
+
     leaf->prev = position;
     position->right = leaf;
+
+}
+
+void BinTree::moveRight() {
+
+    Node*tmp;
+
+    tmp = position->right;
+    position = tmp;
 
 }
 
@@ -67,16 +97,17 @@ void BinTree::createTree() {
 
             if (choice == 'y'){
 
-                // vymazat existujuce
-                // citat subor
-
+                delTree(root);
+                root = position = NULL;
+                read();
                 choice = 'a';
             }
 
+        }else{
+
+        read();
+
         }
-
-        // nacitat strom zo suboru hned
-
     }
 
     if (choice == 'b'){
@@ -212,8 +243,8 @@ void BinTree::positionLeft() {
     if (root != NULL){
 
         if(position != NULL && position ->left != NULL){
-            tmp = position->left;
-            position = tmp;
+
+            moveLeft();
             cout << "DATA: " << position->data << endl;
 
         }else{
@@ -232,8 +263,8 @@ void BinTree::positionRight() {
     if (root != NULL){
 
         if(position != NULL && position ->right != NULL){
-            tmp = position->right;
-            position = tmp;
+
+            moveRight();
             cout << "DATA: " << position->data << endl;
 
         }else{
@@ -304,6 +335,59 @@ void BinTree::printData(ostream &tree) {
 
 void BinTree::read() {
 
+    string line;
+
+    ifstream FILE(file);    // Read bin tree from file
+
+    int fCount = ZERO;      // Global counter in function
+    bool printSide = LEFT;  // Create right side
+    int pCount = ZERO;      // Counter for ~ characters
+    bool side = LEFT;       // Side flip - flop
+
+    while(getline(FILE, line)){
+
+        if (fCount == 1){
+            createRoot(line);
+        }
+
+        if (line == "L"){ side = LEFT; goto jump;}
+        if (line == "P"){ side = RIGHT; goto jump;}
+
+        if (line == "~"){
+
+            pCount++;
+
+            if (pCount == 1){ printSide = RIGHT; goto jump;}
+            if (pCount == 2){
+
+                (side) ? (position = position->prev) : (position = position->prev , position = position->prev);
+                goto jump;
+
+            }
+            if (pCount > 2){position = position->prev; goto jump;}
+
+        }else{
+            pCount = ZERO;
+        }
+
+
+        if (printSide AND fCount > 1 ){
+            createLeft(line);
+            moveLeft();
+        }
+
+        if (!printSide AND fCount > 1){
+            createRight(line);
+            moveRight();
+            printSide = LEFT;
+        }
+
+        jump:
+        fCount++;
+    }
+
+
+
 }
 
 void BinTree::print(Node*leaf, ostream &tree) {
@@ -311,6 +395,7 @@ void BinTree::print(Node*leaf, ostream &tree) {
     if(!leaf){
         tree << "~" << endl;
     }else{
+        tree << leaf->pos << endl;
         tree << leaf->data << endl;
         print(leaf->left, tree);
         print(leaf->right, tree);
@@ -359,3 +444,6 @@ BinTree::~BinTree() {
     tree.close();
 
 }
+
+
+

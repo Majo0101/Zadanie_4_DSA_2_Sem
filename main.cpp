@@ -17,7 +17,7 @@ int main() {
     while (loop) {
 
         cout << endl << endl
-        << "a - Create binary tree" << endl                         // dorobit citanie
+        << "a - Create binary tree" << endl                         //ok
         << "b - Create left child" << endl                          //ok
         << "c - Create right child" << endl                         //ok
         << "d - Set to root" << endl                                //ok

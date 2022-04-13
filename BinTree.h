@@ -12,6 +12,8 @@ public:
     void createRoot(string input);
     void createLeft(string input);
     void createRight(string input);
+    void moveLeft();
+    void moveRight();
 
     void createTree();
     void createLeftChild();
@@ -34,6 +36,7 @@ private:
     char choice{};
 
     struct Node{
+        char pos;
         string data;
         Node * left;
         Node *right;
