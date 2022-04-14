@@ -6,28 +6,28 @@ using namespace std;
 class BinTree {
 
 public:
-    BinTree();
-    ~BinTree();
+    BinTree(); // constructor
+    ~BinTree(); // destructor
 
-    void createRoot(string input);
-    void createLeft(string input);
-    void createRight(string input);
-    void moveLeft();
-    void moveRight();
+    void createRoot(string input);  //create root with input data
+    void createLeft(string input);  //create left leaf with data
+    void createRight(string input); //create right leaf with data
+    void moveLeft();    // move position left
+    void moveRight();   //move position right
 
-    void createTree();
-    void createLeftChild();
-    void createRightChild();
+    void createTree();  //create tree from what ?
+    void createLeftChild();   //create left leaf without move
+    void createRightChild();  //create right leaf without move
 
-    void positionRoot();
-    void positionLeft();
-    void positionRight();
-    void positionActual();
-    void positionBack();
+    void positionRoot();  //return position to root with data read
+    void positionLeft();  //move left with data read
+    void positionRight();  //move right with data read
+    void positionActual(); //actual position with data read and write
+    void positionBack();   //move back with read data
 
-    void printData(ostream &tree);
+    void printData(ostream &tree);  //print data to file   preorder style
 
-    void game();
+    void game(); //game function
 
 
 private:
@@ -43,10 +43,10 @@ private:
         Node *prev;
     };
 
-    void delTree(Node*leaf);
-    void prevPosition(Node*leaf);
-    void print(Node*leaf, ostream &tree);
-    void read();
+    void delTree(Node*leaf);    //delete tree
+    void prevPosition(Node*leaf);  //move back with read data
+    void print(Node*leaf, ostream &tree); //print data to file with recursion
+    void read();  //read from file without recursion
 
     Node*root;
     Node*position;

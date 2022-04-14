@@ -1,16 +1,16 @@
 L
-1
+Does it live on land ?
 L
-2
+Does it have wings ?
 L
-3
+Is it a duck?
+~
 ~
 P
-4
-L
-5
+Is it an elephant ?
 ~
 ~
-~
+P
+Is it a whale ?
 ~
 ~

@@ -5,6 +5,7 @@
 #define CLEAR_STRING "EMPTY"
 #define file "tree.txt"
 #define AND &&
+#define OR ||
 #define ZERO 0
 #define LEFT true;
 #define RIGHT false;
@@ -16,6 +17,7 @@ BinTree::BinTree() {
     position = NULL;
 }
 
+//main constructors
 
 void BinTree::createRoot(string input) {
 
@@ -48,9 +50,11 @@ void BinTree::createLeft(string input) {
 void BinTree::moveLeft() {
 
     Node*tmp;
+    if (position->left != NULL){
+        tmp = position->left;
+        position = tmp;
+    }
 
-    tmp = position->left;
-    position = tmp;
 
 }
 
@@ -70,13 +74,13 @@ void BinTree::createRight(string input) {
 void BinTree::moveRight() {
 
     Node*tmp;
-
-    tmp = position->right;
-    position = tmp;
-
+    if (position->right != NULL){
+        tmp = position->right;
+        position = tmp;
+    }
 }
 
-
+//public functions
 
 void BinTree::createTree() {
 
@@ -326,12 +330,66 @@ void BinTree::positionBack() {
 }
 
 void BinTree::game() {
-    cout << "Game doesn't exist" << endl;
+
+    if(root != NULL AND position != NULL){
+
+        position = root;
+        bool game = true;
+
+        cout << "Welcome in the Game" << endl << endl;
+        cout << position->data << "(y/n) ?" << endl;
+
+        while(game){
+
+            while(true){
+                cin.sync();
+                cin >> choice;
+                if (choice == 'y' OR choice == 'n'){break;}
+                cout << "BAD KEY! Enter your choice again" << endl;
+            }
+
+            if(choice == 'y'){moveLeft();}
+            if(choice == 'n'){moveRight();}
+
+            cout << position->data << "  (y/n) ?" << endl;
+
+            if (position->left == NULL AND position->right == NULL){
+
+                while(true){
+                    cin.sync();
+                    cin >> choice;
+                    if (choice == 'y' OR choice == 'n'){break;}
+                    cout << "BAD KEY! Enter your choice again" << endl;
+                }
+
+                if (choice == 'y') {
+                    cout << "I guessed it !" << endl;
+                    game = ZERO;
+                }
+
+                if (choice == 'n'){
+                    cout << "You are the Winner !" << endl;
+                    game = ZERO;
+                }
+            }
+        }
+    }else{
+        cout << "Somethings went wrong..." << endl;
+    }
+
+
+
+
+
+
 }
 
 void BinTree::printData(ostream &tree) {
     print(root, tree);
 }
+
+
+// private functions
 
 void BinTree::read() {
 
@@ -360,11 +418,18 @@ void BinTree::read() {
             if (pCount == 1){ printSide = RIGHT; goto jump;}
             if (pCount == 2){
 
-                (side) ? (position = position->prev) : (position = position->prev , position = position->prev);
+                if (side AND position->prev != NULL){position = position->prev;}
+                if (!side AND position->prev != NULL){
+                    position = position->prev;
+                    if (position->prev != NULL){
+                        position = position->prev;
+                    }
+                }
+
                 goto jump;
 
             }
-            if (pCount > 2){position = position->prev; goto jump;}
+            if (pCount > 2 AND position->prev != NULL){position = position->prev; goto jump;}
 
         }else{
             pCount = ZERO;
@@ -429,6 +494,7 @@ void BinTree::prevPosition(Node*leaf) {
     }
 }
 
+//Destructor
 
 BinTree::~BinTree() {
 

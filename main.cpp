@@ -25,10 +25,11 @@ int main() {
         << "f - Set to right child" << endl                         //ok
         << "g - Set active item to parent" << endl                  //ok
         << "h - Show active item and left and right data" << endl   //ok
-        << "i - Start game" << endl                                 // dorobit hru
+        << "i - Start game" << endl                                 //ok
         << "x - exit" << endl << endl;                              //ok
 
         cin >> choice;
+
 
         switch (choice) {
 
